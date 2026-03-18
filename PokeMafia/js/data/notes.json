@@ -1,0 +1,19 @@
+{
+    "notes": [
+        {
+            "pokeId": 1,
+            "note": 20
+        },
+
+        {
+            "pokeId": 2,
+            "note": 20
+        },
+
+        {
+            "pokeId": 3,
+            "note": 20
+        }
+    ]
+    
+}
