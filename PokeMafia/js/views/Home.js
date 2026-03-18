@@ -1,4 +1,4 @@
-export default class Home {
+export class Home {
   constructor(pokeProvider, container) {
     this.pokeProvider = pokeProvider;
     this.container = container;

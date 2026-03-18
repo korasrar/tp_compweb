@@ -1,4 +1,4 @@
-export default class PokeFavoris {
+export class PokeFavoris {
   constructor(pokeProvider, container) {
     this.pokeProvider = pokeProvider;
     this.container = container;
