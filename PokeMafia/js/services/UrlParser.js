@@ -3,10 +3,11 @@ export function parseHash(hash) {
   let r = url.split("/");
   let request = {
     resource: null,
+    page: 0,
     id: null,
   };
   request.resource = r[1];
-  request.id = r[2];
-
+  request.page = parseInt(r[2]) || 0;
+  request.id = r[3];
   return request;
 }

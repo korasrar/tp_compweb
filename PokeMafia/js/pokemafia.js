@@ -15,21 +15,23 @@ const home = new Home(pokeProvider);
 const error404 = new Error404(pokeProvider);
 
 const routes = {
-  "/": Home,
-  "/list": PokeList,
-  "/list/:id": PokeDetail,
-  "/favorites": PokeFavoris,
+    "/": home,
+    "/list/:page": pokeList,
+    "/list/:page/:id": pokeDetail,
+    "/favorites": pokeFavoris,
 };
 
 async function router() {
-  const content = null || document.getElementById("#container");
+    const content = null || document.getElementById("container");
 
-  let request = parseHash();
-  let parsedURL =
-    (request.resource ? "/" + request.resource : "/") +
-    (request.id ? "/:id" : "");
-  let page = routes[parsedURL] ? routes[parsedURL] : Error404;
-  content.innerHTML = await page.render();
+    let request = parseHash();
+    let parsedURL =
+        (request.resource ? "/" + request.resource : "/") +
+        (request.page ? "/:page" : "") +
+        (request.id ? "/:id" : "");
+        
+    let page = routes[parsedURL] ? routes[parsedURL] : error404;
+    content.innerHTML = await page.render();
 }
 
 window.addEventListener("hashchange", router);
