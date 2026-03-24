@@ -17,6 +17,7 @@ const home = new Home(pokeProvider, container);
 
 const routes = {
   "/": home,
+  "/list": pokeList,
   "/list/:page": pokeList,
   "/list/:page/:id": pokeDetail,
   "/favorites": pokeFavoris,

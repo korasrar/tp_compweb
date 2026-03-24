@@ -28,6 +28,19 @@ export class PokeProvider{
         }
     }
 
+    async fetchPokeSprite(pokeId){
+        try{
+            const poke = await fetch(this.apiEndpoint + "pokemon/" + `${pokeId}`);
+            const poke_json = await poke.json();
+            console.log(poke_json);
+            console.log(poke_json.sprites.front_default)
+            return poke_json.sprites.front_default
+        }catch(err){
+            console.log('Error fetching pokemon sprite : ', err);
+            return null;
+        }
+    }
+
     async fetchPokesNotes(){
         try{
             const pokes_notes = await fetch(this.jsonEndpoint + "notes");
@@ -48,6 +61,7 @@ export class PokeProvider{
             return poke_note_json
         }catch(err){
             console.log('Error fetching pokemon grade : ', err);
+            return null;
         }
     }
 
