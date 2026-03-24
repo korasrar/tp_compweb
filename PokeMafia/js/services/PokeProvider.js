@@ -1,5 +1,5 @@
 export class PokeProvider{
-    constructor(apiEndpoint){
+    constructor(apiEndpoint, jsonEndpoint){
         this.apiEndpoint = apiEndpoint;
         this.jsonEndpoint = jsonEndpoint;
     }
@@ -36,6 +36,18 @@ export class PokeProvider{
             return pokes_notes_json
         }catch(err){
             console.log('Error fetching pokemon grades : ', err);
+            return null;
+        }
+    }
+
+    async fetchPokeNote(pokeId){
+        try{
+            const poke_note = await fetch(this.jsonEndpoint + "notes" + `?pokeId=${pokeId}`)
+            const poke_note_json = await poke_note.json();
+            console.log(poke_note_json)
+            return poke_note_json
+        }catch(err){
+            console.log('Error fetching pokemon grade : ', err);
             return null;
         }
     }
