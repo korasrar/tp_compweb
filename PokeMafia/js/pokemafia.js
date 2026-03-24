@@ -18,7 +18,7 @@ const home = new Home(pokeProvider, container);
 const routes = {
   "/": home,
   "/list/:page": pokeList,
-  "/list/:page/:id": pokeDetail,
+  "/detail/:id": pokeDetail,
   "/favorites": pokeFavoris,
 };
 
@@ -31,7 +31,7 @@ async function router() {
     (request.page ? "/:page" : "") +
     (request.id ? "/:id" : "");
   
-  console.log()
+  console.log(parsedURL);
 
   let page = routes[parsedURL] ? routes[parsedURL] : new Error404(pokeProvider, container);
   content.innerHTML = await page.render(request.id ? request.id : null, request.page ? request.page : null);
