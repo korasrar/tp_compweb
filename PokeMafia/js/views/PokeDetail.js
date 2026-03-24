@@ -7,12 +7,22 @@ export class PokeDetail {
   async render(id) {
     try {
       const pokemon = await this.pokeProvider.fetchPokemon(id);
-      
+
       const speciesData = await this.pokeProvider.fetchSpeciesPokemon(pokemon);
 
       const evolutionData =
         await this.pokeProvider.fetchEvolutionChain(speciesData);
-
+      // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/14.png
+      const typesIcons = pokemon.types
+        .map((type) => {
+          const typeId = type.type.url
+            .split("/")
+            .filter((x) => x)
+            .pop();
+          console.log(typeId);
+          return `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/${typeId}.png" alt="${typeId}" class="img-fluid p-1" style="max-width: 150px;">`;
+        })
+        .join("");
       return `
         <div class="container mt-4">
           <div class="card">
@@ -38,13 +48,16 @@ export class PokeDetail {
                   <div class="mb-3">
                     <h4>Types</h4>
                     <div>
-                      ${pokemon.types
-                        .map(
-                          (type) => `
-                        <span class="badge bg-secondary me-2 text-capitalize">${type.type.name}</span>
-                      `,
-                        )
-                        .join("")}
+                      ${typesIcons}
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <h4>Informations Physiques</h4>
+                    <p><strong>Poids:</strong> ${pokemon.weight / 10} kg</p>
+                    <p><strong>Taille:</strong> ${pokemon.height / 10} m</p>
+                    <p><strong>Couleur:</strong> <span class="text-capitalize">${speciesData.color.name}</span></p>
+                  </div>
                     </div>
                   </div>
                   
