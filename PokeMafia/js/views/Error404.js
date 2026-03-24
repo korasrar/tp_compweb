@@ -1,10 +1,10 @@
-export default class Error404 {
+export class Error404 {
   constructor(pokeProvider, container) {
     this.pokeProvider = pokeProvider;
     this.container = container;
   }
 
-  static async render() {
-    return ``;
+  async render() {
+    return `Error 404`;
   }
 }

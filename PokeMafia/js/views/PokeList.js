@@ -1,9 +1,9 @@
-export default class PokeList {
+export class PokeList {
   constructor(pokeProvider, container) {
     this.pokeProvider = pokeProvider;
     this.container = container;
   }
-  static async render() {
+  async render() {
     return ``;
   }
 }
