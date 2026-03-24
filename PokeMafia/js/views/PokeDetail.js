@@ -12,6 +12,7 @@ export class PokeDetail {
 
       const evolutionData =
         await this.pokeProvider.fetchEvolutionChain(speciesData);
+
       // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/14.png
       const typesIcons = pokemon.types
         .map((type) => {
@@ -23,6 +24,7 @@ export class PokeDetail {
           return `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/${typeId}.png" alt="${typeId}" class="img-fluid p-1" style="max-width: 150px;">`;
         })
         .join("");
+
       return `
         <div class="container mt-4">
           <div class="card">
@@ -162,7 +164,7 @@ export class PokeDetail {
                alt="${speciesName}" 
                class="img-fluid" 
                style="max-width: 96px;">
-          <p class="text-capitalize mb-0">${speciesName}</p>
+          <p class="text-capitalize mb-0"> <a href="#/detail/${speciesId}" class="text-decoration-none">${speciesName}</a></p>
         </div>
       `;
 
