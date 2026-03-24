@@ -4,7 +4,7 @@ export class Error404 {
     this.container = container;
   }
 
-  static async render() {
-    return ``;
+  async render() {
+    return `Error 404`;
   }
 }

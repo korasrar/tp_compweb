@@ -4,7 +4,7 @@ export class Home {
     this.container = container;
   }
 
-  static async render() {
+  async render() {
     return ``;
   }
 }

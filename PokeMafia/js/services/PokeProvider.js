@@ -1,5 +1,5 @@
 export class PokeProvider{
-    constructor(apiEndpoint){
+    constructor(apiEndpoint, jsonEndpoint){
         this.apiEndpoint = apiEndpoint;
         this.jsonEndpoint = jsonEndpoint;
     }
@@ -40,5 +40,28 @@ export class PokeProvider{
         }
     }
 
+    async fetchSpeciesPokemon(pokemon){
+        try{
+            const speciesResponse = await fetch(pokemon.species.url);
+            const speciesData = await speciesResponse.json();
+            console.log(speciesData);
+            return speciesData;
+        }catch(err){
+            console.log('Error fetching pokemon species : ', err);
+            return null;
+        }
+    }
+
+    async fetchEvolutionChain(speciesData){
+        try{
+            const evolutionResponse = await fetch(speciesData.evolution_chain.url);
+            const evolutionData = await evolutionResponse.json();
+            console.log(evolutionData);
+            return evolutionData;
+        }catch(err){
+            console.log('Error fetching pokemon evolution chain : ', err);
+            return null;
+        }
+    }
 
 }

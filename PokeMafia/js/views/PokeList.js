@@ -3,7 +3,7 @@ export class PokeList {
     this.pokeProvider = pokeProvider;
     this.container = container;
   }
-  static async render() {
+  async render() {
     return ``;
   }
 }
