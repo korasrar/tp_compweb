@@ -184,7 +184,8 @@ export class PokeDetail {
                class="img-fluid" 
                style="max-width: 96px;"
                loading="lazy">
-          <p class="text-capitalize mb-0"> <a href="#/detail/${speciesId}" class="text-decoration-none">${speciesName}</a>(${level || 'N/A'})</p>
+          <p class="text-capitalize mb-0"> <a href="#/detail/${speciesId}" class="text-decoration-none">${speciesName}</a></p>
+          <p class="mb-0"><small>${level ? `Niveau ${level}` : 'Évolution'}</small></p>
         </div>
       `;
 
