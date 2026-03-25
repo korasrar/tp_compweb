@@ -175,6 +175,7 @@ export class PokeDetail {
         .split("/")
         .filter((x) => x)
         .pop();
+      const level = current.evolution_details.length > 0 ? current.evolution_details[0].min_level : null;
 
       html += `
         <div class="text-center me-3 mb-2">
@@ -183,7 +184,7 @@ export class PokeDetail {
                class="img-fluid" 
                style="max-width: 96px;"
                loading="lazy">
-          <p class="text-capitalize mb-0"> <a href="#/detail/${speciesId}" class="text-decoration-none">${speciesName}</a></p>
+          <p class="text-capitalize mb-0"> <a href="#/detail/${speciesId}" class="text-decoration-none">${speciesName}</a>(${level || 'N/A'})</p>
         </div>
       `;
 
