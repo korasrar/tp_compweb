@@ -58,10 +58,10 @@ export class PokeProvider{
             const poke_note = await fetch(this.jsonEndpoint + "notes" + `?pokeId=${pokeId}`)
             const poke_note_json = await poke_note.json();
             console.log(poke_note_json)
-            return poke_note_json
+            return poke_note_json["0"].note
         }catch(err){
             console.log('Error fetching pokemon grade : ', err);
-            return null;
+            return "?";
         }
     }
 

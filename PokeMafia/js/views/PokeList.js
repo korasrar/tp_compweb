@@ -14,11 +14,13 @@ export class PokeList {
 
       for(const pokemon in pokemons){
         let poke = pokemons[pokemon]
-        let sprite = await this.pokeProvider.fetchPokeSprite(parseInt(pokemon)+1)
+        let poke_note = await this.pokeProvider.fetchPokeNote(this.getPokeId(poke.url))
+        let sprite = await this.pokeProvider.fetchPokeSprite(this.getPokeId(poke.url))
         console.log(sprite);
         html += ` <div class="card"> 
                       <h2> ${poke.name}</h2>
                       <img src="${sprite}" alt="${poke.name} front" class="img-fluid">
+                      <p> ${poke_note} </p>
                   </div>
         `
 
@@ -37,6 +39,24 @@ export class PokeList {
         </div>
       `;
     }
+  }
+
+  insertNotePoke(pokeId, note) {
+    
+    const data = fs.readFileSync('data.json');
+    const jsonData = JSON.parse(data)
+
+    jsonData.notes.push({
+      "pokeId": pokeId,
+      "note": note
+    })
+    
+  }
+
+  getPokeId(url){
+    const pokeId = url.split("/").filter((x) => x).pop();
+    return pokeId;
+    
   }
 
 }
