@@ -8,6 +8,11 @@ export class PokeDetail {
     try {
       const pokemon = await this.pokeProvider.fetchPokemon(id);
 
+      // localStorage
+      const pokemonLike = localStorage.getItem(`${pokemon.id}`) === 'true';
+      console.log(`Pokémon ${pokemon.name} is ${pokemonLike ? 'liked' : 'not liked'}`);
+
+
       const speciesData = await this.pokeProvider.fetchSpeciesPokemon(pokemon);
 
       const evolutionData =
@@ -26,12 +31,24 @@ export class PokeDetail {
         .join("");
 
       return `
-        <div class="container mt-4">
+        <div class="container mt-4 mb-4 border rounded p-3 bg-light">
           <div class="card">
             <div class="card-header bg-primary text-white">
-              <h1 class="text-capitalize mb-0">${pokemon.name}</h1>
+              <div class="d-flex align-items-center justify-content-between">
+                <h1 class="text-capitalize mb-0">${pokemon.name}</h1>
+                <!-- Like Button -->
+                <button id="like-btn" class="btn btn-${pokemonLike ? 'danger' : 'outline-danger'}" onclick="
+                  const isLiked = localStorage.getItem('${pokemon.id}') === 'true';
+                  localStorage.setItem('${pokemon.id}', !isLiked);
+                  this.className = 'btn btn-' + (!isLiked ? 'danger' : 'outline-danger');
+                  this.innerHTML = '<i class=\\'fas fa-heart\\'></i> ' + (!isLiked ? 'Unlike' : 'Like');
+                ">
+                  <i class="fas fa-heart"></i> ${pokemonLike ? 'Unlike' : 'Like'}
+                </button>
+              </div>
               <small>Pokédex #${pokemon.id}</small>
             </div>
+          </div>
             <div class="card-body">
               <div class="row">
                 <div class="col-md-4">
@@ -117,11 +134,12 @@ export class PokeDetail {
                     </div>
                   </div>
                 </div>
-              </div>
-              
-              <div class="mt-3">
+                <div class="">
                 <a href="#/list/1" class="btn btn-secondary">← Retour à la liste</a>
               </div>
+              </div>
+              
+              
             </div>
           </div>
         </div>
