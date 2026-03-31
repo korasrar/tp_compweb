@@ -2,7 +2,8 @@ export class PokeProvider{
     constructor(apiEndpoint, jsonEndpoint){
         this.apiEndpoint = apiEndpoint;
         this.jsonEndpoint = jsonEndpoint;
-        this.limit = 20; // nombre de Pokémon par page retournés par l'API
+        this.limit = 20; 
+        this._notesCache = null;
     }
 
     async fetchPokemons(page = 1){
@@ -47,10 +48,16 @@ export class PokeProvider{
 
     async fetchPokesNotes(){
         try{
+            if (this._notesCache) {
+                return this._notesCache;
+            }
+
             const pokes_notes = await fetch(this.jsonEndpoint + "notes");
-            const pokes_notes_json = await pokes_notes.json()
+            const pokes_notes_json = await pokes_notes.json();
             console.log(pokes_notes_json);
-            return pokes_notes_json
+
+            this._notesCache = pokes_notes_json;
+            return pokes_notes_json;
         }catch(err){
             console.log('Error fetching pokemon grades : ', err);
             return null;

@@ -171,11 +171,11 @@ export class PokeDetail {
 
       html += `
         <div class="text-center me-3 mb-2">
-          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${speciesId}.png" 
-               alt="${speciesName}" 
-               class="img-fluid" 
-               style="max-width: 96px;"
-               loading="lazy">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${speciesId}.png" 
+      alt="${speciesName}" 
+      class="img-fluid" 
+      style="max-width: 96px;" 
+      loading="lazy">
           <p class="text-capitalize mb-0"> <a href="#/detail/${speciesId}" class="text-decoration-none">${speciesName}</a></p>
           <p class="mb-0"><small>${level ? `Niveau ${level}` : 'Évolution'}</small></p>
         </div>
