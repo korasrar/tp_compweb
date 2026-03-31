@@ -11,7 +11,7 @@ export class PokeList {
 
       const request = await this.pokeProvider.fetchPokemons(currentPage);
       
-      const pokemons = request["results"];
+  const pokemons = request["results"];
       const hasPrevious = request["previous"]; 
       const hasNext = request["next"]; 
 
@@ -37,19 +37,26 @@ export class PokeList {
         `;
       }
       
+      const notesResponse = await this.pokeProvider.fetchPokesNotes();
+      const notesArray = notesResponse && notesResponse.notes ? notesResponse.notes : [];
+      const notesById = {};
+      for (const n of notesArray) {
+        notesById[n.pokeId] = n.note;
+      }
+
       let html = `<div class="container mt-4">
                     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4">`;
 
-      for(const pokemon in pokemons){
-        let poke = pokemons[pokemon]
-        let poke_note = await this.pokeProvider.fetchPokeNote(this.getPokeId(poke.url));
-        let sprite = await this.pokeProvider.fetchPokeSprite(this.getPokeId(poke.url));
-        console.log(sprite);
+      for (const poke of pokemons) {
+        const pokeId = this.getPokeId(poke.url);
+        const poke_note = notesById[pokeId] ?? "?";
+        const sprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId}.png`;
+
         html += ` 
           <div class="col">
             <div class="card h-100 shadow-sm text-center">
               <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                <img src="${sprite}" alt="${poke.name} front" class="img-fluid mb-3" style="max-width: 96px;">
+                <img src="${sprite}" alt="${poke.name} front" class="img-fluid mb-3" style="max-width: 96px;" loading="lazy">
                 <h5 class="card-title text-capitalize mb-3">${poke.name}</h5>
                 <span class="badge bg-primary mt-auto fs-6">Note : ${poke_note}</span>
               </div>

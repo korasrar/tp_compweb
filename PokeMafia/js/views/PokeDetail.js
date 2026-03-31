@@ -26,7 +26,7 @@ export class PokeDetail {
             .filter((x) => x)
             .pop();
           console.log(typeId);
-          return `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/${typeId}.png" alt="${typeId}" class="img-fluid p-1" style="max-width: 150px;">`;
+          return `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/${typeId}.png" alt="${typeId}" class="img-fluid p-1" style="max-width: 150px;" loading="lazy">`;
         })
         .join("");
 
@@ -54,12 +54,12 @@ export class PokeDetail {
                 <div class="col-md-4">
                   <h3>Sprites</h3>
                   <div class="text-center">
-                    ${pokemon.sprites.front_default ? `<img src="${pokemon.sprites.front_default}" alt="${pokemon.name} front" class="img-fluid">` : ""}
-                    ${pokemon.sprites.back_default ? `<img src="${pokemon.sprites.back_default}" alt="${pokemon.name} back" class="img-fluid">` : ""}
+                    ${pokemon.sprites.front_default ? `<img src="${pokemon.sprites.front_default}" alt="${pokemon.name} front" class="img-fluid" loading="lazy">` : ""}
+                    ${pokemon.sprites.back_default ? `<img src="${pokemon.sprites.back_default}" alt="${pokemon.name} back" class="img-fluid" loading="lazy">` : ""}
                   </div>
                   <div class="text-center mt-2">
-                    ${pokemon.sprites.front_shiny ? `<img src="${pokemon.sprites.front_shiny}" alt="${pokemon.name} shiny front" class="img-fluid">` : ""}
-                    ${pokemon.sprites.back_shiny ? `<img src="${pokemon.sprites.back_shiny}" alt="${pokemon.name} shiny back" class="img-fluid">` : ""}
+                    ${pokemon.sprites.front_shiny ? `<img src="${pokemon.sprites.front_shiny}" alt="${pokemon.name} shiny front" class="img-fluid" loading="lazy">` : ""}
+                    ${pokemon.sprites.back_shiny ? `<img src="${pokemon.sprites.back_shiny}" alt="${pokemon.name} shiny back" class="img-fluid" loading="lazy">` : ""}
                   </div>
                 </div>
                 
@@ -178,10 +178,11 @@ export class PokeDetail {
 
       html += `
         <div class="text-center me-3 mb-2">
-          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${speciesId}.png" 
-               alt="${speciesName}" 
-               class="img-fluid" 
-               style="max-width: 96px;">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${speciesId}.png" 
+      alt="${speciesName}" 
+      class="img-fluid" 
+      style="max-width: 96px;" 
+      loading="lazy">
           <p class="text-capitalize mb-0"> <a href="#/detail/${speciesId}" class="text-decoration-none">${speciesName}</a></p>
         </div>
       `;

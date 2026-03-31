@@ -10,9 +10,8 @@ export function parseHash(hash) {
 
   request.resource = r[1] || null;
 
-  // Gestion des routes : /list/:page et /detail/:id
   if (request.resource === "list") {
-    request.page = parseInt(r[2]) || 1; // page 1 par défaut
+    request.page = parseInt(r[2]) || 1; 
   } else if (request.resource === "detail") {
     request.id = parseInt(r[2]) || 0;
   }
