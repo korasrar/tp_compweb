@@ -1,4 +1,4 @@
-import { API_ENDPOINT } from "./config.js";
+import { API_ENDPOINT, jsonEndpoint } from "./config.js";
 import { parseHash } from "./services/UrlParser.js";
 import { PokeList } from "./views/PokeList.js";
 import { PokeDetail } from "./views/PokeDetail.js";
@@ -9,7 +9,7 @@ import { PokeProvider } from "./services/PokeProvider.js";
 
 const container = document.getElementById("container");
 
-const pokeProvider = new PokeProvider(API_ENDPOINT, '');
+const pokeProvider = new PokeProvider(API_ENDPOINT, jsonEndpoint);
 const pokeList = new PokeList(pokeProvider, container);
 const pokeDetail = new PokeDetail(pokeProvider, container);
 const pokeFavoris = new PokeFavoris(pokeProvider, container);
@@ -17,6 +17,7 @@ const home = new Home(pokeProvider, container);
 
 const routes = {
   "/": home,
+  "/list": pokeList,
   "/list/:page": pokeList,
   "/detail/:id": pokeDetail,
   "/favorites": pokeFavoris,
