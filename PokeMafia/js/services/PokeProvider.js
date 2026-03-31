@@ -2,11 +2,15 @@ export class PokeProvider{
     constructor(apiEndpoint, jsonEndpoint){
         this.apiEndpoint = apiEndpoint;
         this.jsonEndpoint = jsonEndpoint;
+        this.limit = 20; // nombre de Pokémon par page retournés par l'API
     }
 
-    async fetchPokemons(){
+    async fetchPokemons(page = 1){
         try{
-            const pokes = await fetch(this.apiEndpoint + "pokemon");
+            const currentPage = page && page > 0 ? page : 1;
+            const offset = (currentPage - 1) * this.limit;
+
+            const pokes = await fetch(this.apiEndpoint + `pokemon?offset=${offset}&limit=${this.limit}`);
             const pokes_json  = await pokes.json();
             console.log(pokes_json);
             return pokes_json;

@@ -4,11 +4,38 @@ export class PokeList {
     this.container = container;
   }
 
-  async render(page){
+  async render(id, page){
     try {
-      const request = await this.pokeProvider.fetchPokemons();
+      let currentPage = parseInt(page);
+      if (currentPage < 1) currentPage = 1;
+
+      const request = await this.pokeProvider.fetchPokemons(currentPage);
       
       const pokemons = request["results"];
+      const hasPrevious = request["previous"]; 
+      const hasNext = request["next"]; 
+
+      const totalCount = request["count"];
+      const limit = this.pokeProvider.limit;
+      const totalPages = totalCount > 0 ? Math.ceil(totalCount / limit) : currentPage; // fallback si count absent
+
+      const maxButtons = 10;
+      let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+      let endPage = startPage + maxButtons - 1;
+
+      if (endPage > totalPages) {
+        endPage = totalPages;
+        startPage = Math.max(1, endPage - maxButtons + 1);
+      }
+
+      let pagesButtonsHtml = "";
+      for (let p = startPage; p <= endPage; p++) {
+        pagesButtonsHtml += `
+          <li class="page-item ${p === currentPage ? "active" : ""}">
+            <a class="page-link" href="#/list/${p}">${p}</a>
+          </li>
+        `;
+      }
       
       let html = `<div class="container mt-4">
                     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4">`;
@@ -32,7 +59,21 @@ export class PokeList {
       }
     
       html += `   </div>
-                </div>`;
+                  <nav aria-label="Navigation Pokémon" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                      ${hasPrevious
+                        ? `<li class="page-item"><a class="page-link" href="#/list/${currentPage - 1}">Précédent</a></li>`
+                        : `<li class="page-item disabled"><span class="page-link">Précédent</span></li>`}
+
+                      ${pagesButtonsHtml}
+
+                      ${hasNext
+                        ? `<li class="page-item"><a class="page-link" href="#/list/${currentPage + 1}">Suivant</a></li>`
+                        : `<li class="page-item disabled"><span class="page-link">Suivant</span></li>`}
+                    </ul>
+                  </nav>
+                </div>
+              </div>`;
                 
       return html;
 
