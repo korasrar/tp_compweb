@@ -6,6 +6,7 @@ import { PokeFavoris } from "./views/PokeFavoris.js";
 import { Home } from "./views/Home.js";
 import { Error404 } from "./views/Error404.js";
 import { PokeProvider } from "./services/PokeProvider.js";
+import { LikeService } from "./services/LikeService.js";
 
 const container = document.getElementById("container");
 
@@ -36,6 +37,8 @@ async function router() {
 
   let page = routes[parsedURL] ? routes[parsedURL] : new Error404(pokeProvider, container);
   content.innerHTML = await page.render(request.id ? request.id : null, request.page ? request.page : null);
+  
+  LikeService.attachEventListeners(content);
 }
 
 window.addEventListener("hashchange", router);
