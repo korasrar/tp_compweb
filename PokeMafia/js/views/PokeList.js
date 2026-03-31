@@ -9,9 +9,13 @@ export class PokeList {
       let currentPage = parseInt(page);
       if (currentPage < 1) currentPage = 1;
 
-      const request = await this.pokeProvider.fetchPokemons(currentPage);
-      
-  const pokemons = request["results"];
+      //https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
+      const [request, notesResponse] = await Promise.all([
+        this.pokeProvider.fetchPokemons(currentPage),
+        this.pokeProvider.fetchPokesNotes(),
+      ]);
+
+      const pokemons = request["results"];
       const hasPrevious = request["previous"]; 
       const hasNext = request["next"]; 
 
@@ -36,8 +40,7 @@ export class PokeList {
           </li>
         `;
       }
-      
-      const notesResponse = await this.pokeProvider.fetchPokesNotes();
+
       const notesArray = notesResponse && notesResponse.notes ? notesResponse.notes : [];
       const notesById = {};
       for (const n of notesArray) {
