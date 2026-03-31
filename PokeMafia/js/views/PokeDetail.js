@@ -1,3 +1,5 @@
+import { LikeService } from '../services/LikeService.js';
+
 export class PokeDetail {
   constructor(pokeProvider, container) {
     this.pokeProvider = pokeProvider;
@@ -8,10 +10,8 @@ export class PokeDetail {
     try {
       const pokemon = await this.pokeProvider.fetchPokemon(id);
 
-      // localStorage
-      const pokemonLike = localStorage.getItem(`${pokemon.id}`) === 'true';
+      const pokemonLike = LikeService.isLiked(pokemon.id);
       console.log(`Pokémon ${pokemon.name} is ${pokemonLike ? 'liked' : 'not liked'}`);
-
 
       const speciesData = await this.pokeProvider.fetchSpeciesPokemon(pokemon);
 
@@ -36,15 +36,7 @@ export class PokeDetail {
             <div class="card-header bg-primary text-white">
               <div class="d-flex align-items-center justify-content-between">
                 <h1 class="text-capitalize mb-0">${pokemon.name}</h1>
-                <!-- Like Button -->
-                <button id="like-btn" class="btn btn-${pokemonLike ? 'danger' : 'outline-danger'}" onclick="
-                  const isLiked = localStorage.getItem('${pokemon.id}') === 'true';
-                  localStorage.setItem('${pokemon.id}', !isLiked);
-                  this.className = 'btn btn-' + (!isLiked ? 'danger' : 'outline-danger');
-                  this.innerHTML = '<i class=\\'fas fa-heart\\'></i> ' + (!isLiked ? 'Unlike' : 'Like');
-                ">
-                  <i class="fas fa-heart"></i> ${pokemonLike ? 'Unlike' : 'Like'}
-                </button>
+                ${LikeService.getLikeButtonHTML(pokemon.id, pokemon.name)}
               </div>
               <small>Pokédex #${pokemon.id}</small>
             </div>
@@ -175,6 +167,7 @@ export class PokeDetail {
         .split("/")
         .filter((x) => x)
         .pop();
+      const level = current.evolution_details.length > 0 ? current.evolution_details[0].min_level : null;
 
       html += `
         <div class="text-center me-3 mb-2">
@@ -184,6 +177,7 @@ export class PokeDetail {
       style="max-width: 96px;" 
       loading="lazy">
           <p class="text-capitalize mb-0"> <a href="#/detail/${speciesId}" class="text-decoration-none">${speciesName}</a></p>
+          <p class="mb-0"><small>${level ? `Niveau ${level}` : 'Évolution'}</small></p>
         </div>
       `;
 
