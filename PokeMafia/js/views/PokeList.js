@@ -15,8 +15,8 @@ export class PokeList {
 
       for(const pokemon in pokemons){
         let poke = pokemons[pokemon]
-        let poke_note = await this.pokeProvider.fetchPokeNote(this.getPokeId(poke.url))
-        let sprite = await this.pokeProvider.fetchPokeSprite(this.getPokeId(poke.url))
+        let poke_note = await this.pokeProvider.fetchPokeNote(this.getPokeId(poke.url));
+        let sprite = await this.pokeProvider.fetchPokeSprite(this.getPokeId(poke.url));
         console.log(sprite);
         html += ` 
           <div class="col">
