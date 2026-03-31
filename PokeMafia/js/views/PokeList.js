@@ -62,7 +62,7 @@ export class PokeList {
             <div class="card h-100 shadow-sm text-center">
               <div class="card-body d-flex flex-column align-items-center justify-content-center">
                 <a href="#/detail/${pokeId}" class="text-decoration-none">
-                  <img src="${sprite}" alt="${poke.name} front" class="img-fluid mb-3" style="max-width: 96px;">
+                  <img src="${sprite}" alt="${poke.name} front" class="img-fluid mb-3" style="max-width: 96px;" loading="lazy">
                   <h5 class="card-title text-capitalize mb-3 text-dark">${poke.name}</h5>
                 </a>
                 <span class="badge bg-primary fs-6">Note : ${poke_note}</span>
