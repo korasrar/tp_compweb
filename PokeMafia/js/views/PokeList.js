@@ -1,3 +1,5 @@
+import { LikeService } from '../services/LikeService.js';
+
 export class PokeList {
   constructor(pokeProvider, container) {
     this.pokeProvider = pokeProvider;
@@ -42,16 +44,22 @@ export class PokeList {
 
       for(const pokemon in pokemons){
         let poke = pokemons[pokemon]
-        let poke_note = await this.pokeProvider.fetchPokeNote(this.getPokeId(poke.url));
-        let sprite = await this.pokeProvider.fetchPokeSprite(this.getPokeId(poke.url));
+        let pokeId = this.getPokeId(poke.url);
+        let poke_note = await this.pokeProvider.fetchPokeNote(pokeId);
+        let sprite = await this.pokeProvider.fetchPokeSprite(pokeId);
         console.log(sprite);
         html += ` 
           <div class="col">
             <div class="card h-100 shadow-sm text-center">
               <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                <img src="${sprite}" alt="${poke.name} front" class="img-fluid mb-3" style="max-width: 96px;">
-                <h5 class="card-title text-capitalize mb-3">${poke.name}</h5>
-                <span class="badge bg-primary mt-auto fs-6">Note : ${poke_note}</span>
+                <a href="#/detail/${pokeId}" class="text-decoration-none">
+                  <img src="${sprite}" alt="${poke.name} front" class="img-fluid mb-3" style="max-width: 96px;">
+                  <h5 class="card-title text-capitalize mb-3 text-dark">${poke.name}</h5>
+                </a>
+                <span class="badge bg-primary fs-6">Note : ${poke_note}</span>
+                <div class="mt-2">
+                  ${LikeService.getLikeButtonHTML(pokeId, poke.name)}
+                </div>
               </div>
             </div>
           </div>
