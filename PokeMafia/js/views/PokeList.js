@@ -2,6 +2,20 @@ export class PokeList {
   constructor(pokeProvider, container) {
     this.pokeProvider = pokeProvider;
     this.container = container;
+
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('pagination-nav');
+      if (nav) {
+        if ((window.innerHeight + Math.round(window.scrollY)) >= document.documentElement.scrollHeight - 10) {
+          nav.style.opacity = '0';
+          nav.style.visibility = 'hidden';
+          nav.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
+        } else {
+          nav.style.opacity = '1';
+          nav.style.visibility = 'visible';
+        }
+      }
+    });
   }
 
   async render(id, page){
@@ -69,7 +83,7 @@ export class PokeList {
       }
     
       html += `   </div>
-                  <nav aria-label="Navigation Pokémon" class="mt-4">
+                  <nav id="pagination-nav" aria-label="Navigation Pokémon" class="mt-4 fixed-bottom">
                     <ul class="pagination justify-content-center">
                       ${hasPrevious
                         ? `<li class="page-item"><a class="page-link" href="#/list/${currentPage - 1}">Précédent</a></li>`
@@ -115,7 +129,5 @@ export class PokeList {
   getPokeId(url){
     const pokeId = url.split("/").filter((x) => x).pop();
     return pokeId;
-    
   }
-
 }
