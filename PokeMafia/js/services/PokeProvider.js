@@ -2,7 +2,7 @@ export class PokeProvider{
     constructor(apiEndpoint, jsonEndpoint){
         this.apiEndpoint = apiEndpoint;
         this.jsonEndpoint = jsonEndpoint;
-        this.limit = 20; 
+        this.limit = 40; 
         this._notesCache = null;
     }
 
