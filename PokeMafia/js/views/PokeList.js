@@ -24,6 +24,8 @@ export class PokeList {
     try {
       let currentPage = parseInt(page);
       if (currentPage < 1) currentPage = 1;
+      
+      localStorage.setItem('currentPage', currentPage);
 
       //https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
       const [request, notesResponse] = await Promise.all([
@@ -57,7 +59,7 @@ export class PokeList {
         `;
       }
 
-      const notesArray = notesResponse && notesResponse.notes ? notesResponse.notes : [];
+      const notesArray = Array.isArray(notesResponse) ? notesResponse : (notesResponse && notesResponse.notes ? notesResponse.notes : []);
       const notesById = {};
       for (const n of notesArray) {
         notesById[n.pokeId] = n.note;

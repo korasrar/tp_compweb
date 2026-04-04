@@ -139,7 +139,7 @@ export class PokeDetail {
                   </div>
                 </div>
                 <div class="">
-                <a href="#/list/1" class="btn btn-secondary">← Retour à la liste</a>
+                <a href="#/list/${localStorage.getItem('currentPage') || 1}" class="btn btn-secondary">← Retour à la liste</a>
               </div>
               </div>
               
@@ -155,7 +155,7 @@ export class PokeDetail {
           <div class="alert alert-danger">
             <h4>Erreur</h4>
             <p>Impossible de charger les détails du Pokémon: ${error.message}</p>
-            <a href="#/list/1" class="btn btn-secondary">← Retour à la liste</a>
+            <a href="#/list/${localStorage.getItem('currentPage') || 1}" class="btn btn-secondary">← Retour à la liste</a>
           </div>
         </div>
       `;
@@ -204,15 +204,12 @@ export class PokeDetail {
     return html;
   }
 
-  // Configuration de la fonction globale pour la mise à jour de la note
-  // Cette méthode doit être appelée juste après l'affichage du HTML.
   setupNoteEventHandler() {
     window.updatePokeNote = async (pokeId) => {
       const input = document.getElementById("poke-note-input");
       const noteValue = input ? parseInt(input.value) : NaN;
       if (!isNaN(noteValue) && noteValue >= 0 && noteValue <= 20) {
         await this.pokeProvider.updatePokeNote(pokeId, noteValue);
-        // Force un re-rendu de la vue pour mettre à jour la note affichée
         window.location.reload();
       } else {
         alert("Veuillez entrer une note valide entre 0 et 20.");

@@ -69,7 +69,7 @@ export class PokeProvider{
             const poke_note = await fetch(this.jsonEndpoint + "notes" + `?pokeId=${pokeId}`)
             const poke_note_json = await poke_note.json();
             console.log(poke_note_json)
-            return poke_note_json.length >= 0 ? poke_note_json["0"].note : "?";
+            return poke_note_json.length > 0 ? poke_note_json[0].note : "?";
         }catch(err){
             console.log('Error fetching pokemon grade : ', err);
             return "?";
@@ -78,7 +78,10 @@ export class PokeProvider{
 
     async updatePokeNote(pokeId, note) {
         try {
-            const existing = await fetch(this.jsonEndpoint + "notes" + `?pokeId=${pokeId}`);
+            const numPokeId = parseInt(pokeId);
+            const numNote = parseInt(note);
+
+            const existing = await fetch(this.jsonEndpoint + "notes" + `?pokeId=${numPokeId}`);
             const existingJson = await existing.json();
             
             if (existingJson.length > 0) {
@@ -86,13 +89,13 @@ export class PokeProvider{
                 await fetch(this.jsonEndpoint + "notes/" + noteId, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ note: note }),
+                    body: JSON.stringify({ note: numNote }),
                 });
             } else {
                 await fetch(this.jsonEndpoint + "notes", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ pokeId: pokeId, note: note }),
+                    body: JSON.stringify({ pokeId: numPokeId, note: numNote }),
                 });
             }
 

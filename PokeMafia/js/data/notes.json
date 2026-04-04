@@ -1,39 +1,9 @@
 {
   "notes": [
     {
-      "pokeId": 1,
-      "note": 20,
-      "id": "5sFIgZRwqfk"
-    },
-    {
-      "pokeId": 2,
-      "note": 20,
-      "id": "xmqGPWxBIas"
-    },
-    {
-      "pokeId": 3,
-      "note": 20,
-      "id": "I-v6C1f-aJs"
-    },
-    {
-      "pokeId": 593,
-      "note": 20,
-      "id": "FBPtz9Ft9zQ"
-    },
-    {
-      "pokeId": 10163,
-      "note": 20,
-      "id": "HKEqFAYuzJ8"
-    },
-    {
-      "pokeId": 88,
-      "note": 0,
-      "id": "mayMTP8VrM8"
-    },
-    {
-      "pokeId": 7,
-      "note": 20,
-      "id": "u1XYf7M9hwo"
+      "pokeId": 128,
+      "note": 4,
+      "id": "Z6YC4A8a6OI"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
