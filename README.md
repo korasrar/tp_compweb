@@ -1,4 +1,4 @@
-# PokeMafia | Foucher Mattéo et Maubert Céléstin
+# PokeMafia
 
 ## Installation & Lancement
 
