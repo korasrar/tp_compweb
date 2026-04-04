@@ -1,0 +1,49 @@
+import { API_ENDPOINT, jsonEndpoint } from "./config.js";
+import { parseHash } from "./services/UrlParser.js";
+import { PokeList } from "./views/PokeList.js";
+import { PokeDetail } from "./views/PokeDetail.js";
+import { PokeFavoris } from "./views/PokeFavoris.js";
+import { Home } from "./views/Home.js";
+import { Error404 } from "./views/Error404.js";
+import { PokeProvider } from "./services/PokeProvider.js";
+import { LikeService } from "./services/LikeService.js";
+
+const container = document.getElementById("container");
+
+const pokeProvider = new PokeProvider(API_ENDPOINT, jsonEndpoint);
+const pokeList = new PokeList(pokeProvider, container);
+const pokeDetail = new PokeDetail(pokeProvider, container);
+const pokeFavoris = new PokeFavoris(pokeProvider, container);
+const home = new Home(pokeProvider, container);
+
+const routes = {
+  "/": home,
+  "/list": pokeList,
+  "/list/:page": pokeList,
+  "/detail/:id": pokeDetail,
+  "/favorites": pokeFavoris,
+};
+
+async function router() {
+  const content = null || document.getElementById("container");
+
+  let request = parseHash();
+  let parsedURL =
+    (request.resource ? "/" + request.resource : "/") +
+    (request.page ? "/:page" : "") +
+    (request.id ? "/:id" : "");
+  
+  console.log(parsedURL);
+
+  let page = routes[parsedURL] ? routes[parsedURL] : new Error404(pokeProvider, container);
+  content.innerHTML = await page.render(request.id ? request.id : null, request.page ? request.page : null);
+  
+  if (page === pokeDetail) {
+    page.setupNoteEventHandler();
+  }
+
+  LikeService.attachEventListeners(content);
+}
+
+window.addEventListener("hashchange", router);
+window.addEventListener("load", router);

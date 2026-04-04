@@ -1,0 +1,10 @@
+{
+  "notes": [
+    {
+      "pokeId": 128,
+      "note": 4,
+      "id": "Z6YC4A8a6OI"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

@@ -1,0 +1,13 @@
+body {
+    background-image: url('../img/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding-top: 80px;
+}
+
+#container {
+    min-height: 100vh;
+}
