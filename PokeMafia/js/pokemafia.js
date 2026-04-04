@@ -38,6 +38,10 @@ async function router() {
   let page = routes[parsedURL] ? routes[parsedURL] : new Error404(pokeProvider, container);
   content.innerHTML = await page.render(request.id ? request.id : null, request.page ? request.page : null);
   
+  if (page === pokeDetail) {
+    page.setupNoteEventHandler();
+  }
+
   LikeService.attachEventListeners(content);
 }
 

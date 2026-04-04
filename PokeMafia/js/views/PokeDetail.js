@@ -18,6 +18,8 @@ export class PokeDetail {
       const evolutionData =
         await this.pokeProvider.fetchEvolutionChain(speciesData);
 
+      const pokeNote = await this.pokeProvider.fetchPokeNote(pokemon.id);
+
       // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/14.png
       const typesIcons = pokemon.types
         .map((type) => {
@@ -42,6 +44,16 @@ export class PokeDetail {
             </div>
           </div>
             <div class="card-body">
+              <div class="mb-4">
+                <h4>Note du Pokémon</h4>
+                <div class="d-flex align-items-center">
+                  <span class="badge bg-primary fs-5 me-3">Note actuelle : ${pokeNote}</span>
+                  <div class="input-group" style="max-width: 300px;">
+                    <input type="number" id="poke-note-input" class="form-control" placeholder="Entrez une note (0-20)" min="0" max="20">
+                    <button class="btn btn-outline-primary" type="button" onclick="window.updatePokeNote(${pokemon.id})">Valider</button>
+                  </div>
+                </div>
+              </div>
               <div class="row">
                 <div class="col-md-4">
                   <h3>Sprites</h3>
@@ -190,5 +202,21 @@ export class PokeDetail {
     }
 
     return html;
+  }
+
+  // Configuration de la fonction globale pour la mise à jour de la note
+  // Cette méthode doit être appelée juste après l'affichage du HTML.
+  setupNoteEventHandler() {
+    window.updatePokeNote = async (pokeId) => {
+      const input = document.getElementById("poke-note-input");
+      const noteValue = input ? parseInt(input.value) : NaN;
+      if (!isNaN(noteValue) && noteValue >= 0 && noteValue <= 20) {
+        await this.pokeProvider.updatePokeNote(pokeId, noteValue);
+        // Force un re-rendu de la vue pour mettre à jour la note affichée
+        window.location.reload();
+      } else {
+        alert("Veuillez entrer une note valide entre 0 et 20.");
+      }
+    };
   }
 }
