@@ -69,10 +69,38 @@ export class PokeProvider{
             const poke_note = await fetch(this.jsonEndpoint + "notes" + `?pokeId=${pokeId}`)
             const poke_note_json = await poke_note.json();
             console.log(poke_note_json)
-            return poke_note_json["0"].note
+            return poke_note_json.length >= 0 ? poke_note_json["0"].note : "?";
         }catch(err){
             console.log('Error fetching pokemon grade : ', err);
             return "?";
+        }
+    }
+
+    async updatePokeNote(pokeId, note) {
+        try {
+            const existing = await fetch(this.jsonEndpoint + "notes" + `?pokeId=${pokeId}`);
+            const existingJson = await existing.json();
+            
+            if (existingJson.length > 0) {
+                const noteId = existingJson[0].id;
+                await fetch(this.jsonEndpoint + "notes/" + noteId, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ note: note }),
+                });
+            } else {
+                await fetch(this.jsonEndpoint + "notes", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ pokeId: pokeId, note: note }),
+                });
+            }
+
+            this._notesCache = null;
+            return true;
+        } catch (err) {
+            console.log('Error updating pokemon grade : ', err);
+            return false;
         }
     }
 
